@@ -1,4 +1,10 @@
 import { PartialType } from '@nestjs/swagger';
-import { CreateClotheDto } from './create-clothe.dto';
+import { IsNotEmpty, IsNumber } from 'class-validator';
+import { CreateClothDto } from './create-clothe.dto';
 
-export class UpdateClotheDto extends PartialType(CreateClotheDto) {}
+
+export class UpdateClothDto {
+    @IsNumber()
+    @IsNotEmpty()
+    id: number
+}

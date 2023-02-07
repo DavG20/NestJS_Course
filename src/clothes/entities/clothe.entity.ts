@@ -1,9 +1,9 @@
 import { Column, PrimaryGeneratedColumn } from "typeorm";
 
-export class Clothe {
+export class Cloth {
     @PrimaryGeneratedColumn({
         type: 'bigint',
-        name: 'user_id',
+        name: 'cloth_id',
     })
     id: number;
 
@@ -38,4 +38,12 @@ export class Clothe {
         default: ""
     })
     origin: string
+
+
+    @Column({
+        name: "profile_id",
+        nullable: true,
+        default: ""
+    })
+    profile_id: number
 }

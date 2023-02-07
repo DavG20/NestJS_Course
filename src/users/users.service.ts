@@ -1,7 +1,6 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Request } from 'express';
-import { use } from 'passport';
 import { AuthHelper } from 'src/auth/Auth.Helper';
 
 

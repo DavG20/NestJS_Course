@@ -1,12 +1,13 @@
 
+import { Cloth } from "src/clothes/entities/clothe.entity";
 import { User } from "./user.entity";
 
 
 
 
-const entities =[User];
+const entities = [User, Cloth];
 
-export {User ,};
+export { User, Cloth };
 
-export  default entities;
+export default entities;
 

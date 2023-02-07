@@ -1,19 +1,21 @@
-import { isNotEmpty, IsNotEmpty } from "class-validator";
+import { isNotEmpty, IsNotEmpty, IsNumber, IsString } from "class-validator";
 
-export class CreateClotheDto {
+export class CreateClothDto {
 
+    @IsNotEmpty()
+    @IsString()
+    clothtpye: string
 
+    @IsNotEmpty()
+    @IsString()
+    description: string
 
-@IsNotEmpty()
-clothtpye :string
+    @IsNotEmpty()
+    @IsNumber()
+    price: number
 
-@IsNotEmpty()
-description:string
-
-@IsNotEmpty()
-price:number
-
-@IsNotEmpty()
-origin:string
+    
+    origin: string
 
 }
+

@@ -1,26 +1,58 @@
-import { Injectable } from '@nestjs/common';
-import { CreateClotheDto } from './dto/create-clothe.dto';
-import { UpdateClotheDto } from './dto/update-clothe.dto';
+import { Injectable, Req, UploadedFile } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+
+
+
+import { Cloth } from './entities/clothe.entity';
+
+import { ProfileService } from './ClothProfile/profile.service';
+import { UpdateClothDto } from './dto/update-clothe.dto';
+import { CreateClothDto } from './dto/create-clothe.dto';
 
 @Injectable()
 export class ClothesService {
-  create(createClotheDto: CreateClotheDto) {
-    return 'This action adds a new clothe';
+  @InjectRepository(Cloth)
+  private readonly clothRepository: Repository<Cloth>;
+
+  private readonly profileService: ProfileService;
+
+
+ async create(createClotheDto: CreateClothDto) {
+    return await this.clothRepository.save(createClotheDto); 
   }
 
   findAll() {
     return `This action returns all clothes`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} clothe`;
+ async findOne(id: number) {
+    return  await this.clothRepository.findOneBy({id});
   }
 
-  update(id: number, updateClotheDto: UpdateClotheDto) {
-    return `This action updates a #${id} clothe`;
+ async update(id: number, updateClotheDto: UpdateClothDto) {
+    return await this.clothRepository.save(updateClotheDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} clothe`;
+  async remove(id: number) {
+    return await this.clothRepository.delete(id);
   }
+
+
+
+
+  // add avator or profile for cloth
+
+  async UploadProfile(body: UpdateClothDto, buffer: Buffer, fileName: string) {
+    const avator = await this.profileService.UploadProfile(buffer, fileName);
+    await this.clothRepository.update(body.id, {
+      profile_id: avator.id
+    });
+    return avator;
+
+  }
+
+
+
+
 }
