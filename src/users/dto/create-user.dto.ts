@@ -1,5 +1,6 @@
 import { Trim } from "class-sanitizer";
-import { IsEmail, IsNotEmpty, IsString, MinLength } from "class-validator";
+import { IsEmail, IsEnum, IsNotEmpty, IsString, MinLength } from "class-validator";
+import { Role } from "src/RBAC/role.enum";
 
 
 export class CreateUserDto {
@@ -19,6 +20,8 @@ export class CreateUserDto {
     @IsNotEmpty()
     @IsEmail()
     email: string;
+
+    roles: Role;
 
 
 }

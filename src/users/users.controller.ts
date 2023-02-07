@@ -1,7 +1,7 @@
 
 
 
-import { Get, Body, Param, Delete, Put, UseGuards, UseInterceptors, ClassSerializerInterceptor, Req, Inject, Controller } from '@nestjs/common';
+import { Get, Body, Param, Delete, Put, UseGuards, Req, Inject, Controller } from '@nestjs/common';
 import { UsersService } from './users.service';
 
 
@@ -12,7 +12,11 @@ import { User } from './entities';
 
 import { Request } from 'express';
 import { JwtAuthGuard } from 'src/auth/Auth.guard';
-import { JwtAuthGuardAdmin } from 'src/admin/auth/Auth.guard';
+
+import { Role } from 'src/RBAC/role.enum';
+import RolesGuard from 'src/RBAC/roles.guard';
+
+
 
 
 
@@ -27,18 +31,22 @@ export class UsersController {
 
 
   @Get()
-  @UseGuards(JwtAuthGuardAdmin)
+  @UseGuards(RolesGuard(Role.Admin))
+  @UseGuards(JwtAuthGuard)
   findAll() {
     return this.usersService.getUsers();
   }
 
   @Get(':id')
+  @UseGuards(RolesGuard(Role.Admin))
+  @UseGuards(JwtAuthGuard)
   findOne(@Param('id') id: string) {
     return this.usersService.getFilteredRepsonseUser(+id);
   }
 
-  @Delete("delete")
 
+  @Delete("delete")
+  @UseGuards(RolesGuard(Role.User))
   @UseGuards(JwtAuthGuard)
 
   DeleteAccount(@Body() body: DeleteAccountDto, @Req() req: Request) {
@@ -50,17 +58,17 @@ export class UsersController {
 
   @UseGuards(JwtAuthGuard)
 
-  // @UseInterceptors(ClassSerializerInterceptor)
-
   UpdatePassword(@Body() body: UpdatePasswordDto, @Req() req: Request): Promise<User> {
     return this.usersService.UpdatePassword(body, req);
   }
 
-  // @Delete(":id")
-  // @UseGuards(JwtAuthGuardAdmin)
-  // delete(@Param('id') id: string) {
-  //   return this.usersService.Delete(+id);
-  // }
+  @Delete(":id")
+  @UseGuards(RolesGuard(Role.Admin))
+  @UseGuards(JwtAuthGuard)
+
+  delete(@Param('id') id: string) {
+    return this.usersService.DeleteuserById(+id);
+  }
 
 
 }

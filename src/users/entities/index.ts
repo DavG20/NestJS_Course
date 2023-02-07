@@ -1,10 +1,10 @@
-import { Admin } from "src/admin/entities/admin.entity";
+
 import { User } from "./user.entity";
 
 
 
 
-const entities =[User,Admin];
+const entities =[User];
 
 export {User ,};
 

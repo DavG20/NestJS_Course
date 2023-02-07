@@ -4,12 +4,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import entities from './users/entities';
-import { UsersController } from './users/users.controller';
+
 import { UsersModule } from './users/users.module';
 
 import { ClothesModule } from './clothes/clothes.module';
 import { AuthModule } from './auth/auth.module';
-import { AuthAdminModule } from './admin/auth/authadmin.module';
+
+
+
 
 @Module({
   imports: [
@@ -31,9 +33,11 @@ import { AuthAdminModule } from './admin/auth/authadmin.module';
     UsersModule,
     ClothesModule,
     AuthModule,
-    AuthAdminModule
+
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService,
+  ],
+
 })
 export class AppModule { }

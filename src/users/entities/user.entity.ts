@@ -1,3 +1,4 @@
+import { Role } from "src/RBAC/role.enum";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
@@ -8,12 +9,12 @@ export class User {
         name: 'user_id',
     })
     id: number;
-    
-    
+
+
     @Column({
-        name:'user_name',
+        name: 'user_name',
         nullable: false,
-        unique:true,
+        unique: true,
 
     })
     username: string;
@@ -21,17 +22,27 @@ export class User {
     @Column({
         name: 'email_address',
         nullable: false,
-        
-        
+
+
     })
     email: string;
 
     @Column({
-        name:'password',
+        name: 'password',
         nullable: false,
-        
+
     })
     password: string;
+
+
+    @Column({
+        type : 'enum',
+        enum : Role,
+        default : Role.User
+
+    })
+
+    roles : Role;
 }
 
 

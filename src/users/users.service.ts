@@ -54,12 +54,21 @@ export class UsersService {
     for (var i = 0; i < users.length; i++) {
       let user = users[i];
       let filterUser: UserDtoResponse;
-      filterUser = this.FilterReponse(user) as UserDtoResponse;
-      userResponse.push(filterUser);
+      filterUser = this.FilterReponse(user);
+      
+        userResponse.push(filterUser);
+      
     }
 
 
     return userResponse;
+  }
+
+
+
+  DeleteuserById(id: number) {
+
+      return this.userRepository.delete({ id });
   }
 
 
@@ -75,18 +84,20 @@ export class UsersService {
 
     let userid = user.id;
 
-    if (isNaN(userid)){
+    if (isNaN(userid)) {
 
       throw new HttpException("invalid link", HttpStatus.BAD_GATEWAY);
 
     }
-    
-    return this.Delete(+userid);
+
+    return this.delete(+userid);
   }
 
-  Delete(id: number) {
+
+  delete(id: number) {
     return this.userRepository.delete({ id });
   }
+
 
 
 
@@ -114,7 +125,7 @@ export class UsersService {
 
     const user: User = <User>req.user;
 
-    
+
 
     let isOldPasswordRight = this.helper.isPasswordValid(body.oldpassword, user.password);
 

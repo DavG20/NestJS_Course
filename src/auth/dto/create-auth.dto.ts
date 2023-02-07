@@ -1,5 +1,7 @@
 import { Trim } from "class-sanitizer";
 import { IsEmail, IsNotEmpty, IsString, MinLength } from "class-validator";
+import { Role } from "src/RBAC/role.enum";
+import { Column } from "typeorm";
 
 export class CreateUserDto {
     @Trim()
@@ -18,6 +20,16 @@ export class CreateUserDto {
     @IsNotEmpty()
     @IsEmail()
     email: string;
+
+
+    @Column({
+        type : 'enum',
+        enum : Role,
+        default : Role.User
+
+    })
+
+    roles : Role;
 
 
 }
